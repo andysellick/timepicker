@@ -20,8 +20,8 @@
 	var Plugin = function(elem,options){
 		this.elem = elem;
 		this.$elem = $(elem);
-		this.options = options
-	}
+		this.options = options;
+	};
 
 	Plugin.prototype = {
 		init: function(){
@@ -46,7 +46,7 @@
 				initialAMPM: 'AM',
 				incrementMins: 5,
 				increaseText: "+",
-				decreaseText: "-",
+				decreaseText: "-"
 			}, this.defaults, this.options);
 
             //all functions
@@ -88,19 +88,19 @@
 
                     var time = thisobj.timefunctions.getCurrTime();
 
-                    var $hour = $('<input/>').attr('type','text').addClass('timeinput hour').attr('maxlength',2).val(time[0]).appendTo($hourwrap);
-                    var $hrup = $('<button/>').addClass('changeval up hour').html(thisobj.settings.increaseText).attr('data-action','1').appendTo($hourwrap);
-                    var $hrdn = $('<button/>').addClass('changeval down hour').html(thisobj.settings.decreaseText).attr('data-action','-1').appendTo($hourwrap);
+                    $('<input/>').attr('type','text').addClass('timeinput hour').attr('maxlength',2).val(time[0]).appendTo($hourwrap);
+                    $('<button/>').addClass('changeval up hour').html(thisobj.settings.increaseText).attr('data-action','1').appendTo($hourwrap);
+                    $('<button/>').addClass('changeval down hour').html(thisobj.settings.decreaseText).attr('data-action','-1').appendTo($hourwrap);
 
-                    var $mint = $('<input/>').attr('type','text').addClass('timeinput mint').attr('maxlength',2).val(time[1]).appendTo($mintwrap);
-                    var $miup = $('<button/>').addClass('changeval up mint').html(thisobj.settings.increaseText).attr('data-action','1').appendTo($mintwrap);
-                    var $midn = $('<button/>').addClass('changeval down mint').html(thisobj.settings.decreaseText).attr('data-action','-1').appendTo($mintwrap);
+                    $('<input/>').attr('type','text').addClass('timeinput mint').attr('maxlength',2).val(time[1]).appendTo($mintwrap);
+                    $('<button/>').addClass('changeval up mint').html(thisobj.settings.increaseText).attr('data-action','1').appendTo($mintwrap);
+                    $('<button/>').addClass('changeval down mint').html(thisobj.settings.decreaseText).attr('data-action','-1').appendTo($mintwrap);
 
                     if(!thisobj.settings.twentyfourhour){
                         $ampmwrap = $('<div/>').addClass('timewrap ampm');
-                        var $ampm = $('<input/>').attr('type','text').addClass('timeinput ampm').attr('maxlength',2).val(time[2]).appendTo($ampmwrap);
-                        var $apup = $('<button/>').addClass('changeval up ampm').html(thisobj.settings.increaseText).attr('data-action','am').appendTo($ampmwrap);
-                        var $apdn = $('<button/>').addClass('changeval down ampm').html(thisobj.settings.decreaseText).attr('data-action','pm').appendTo($ampmwrap);
+                        $('<input/>').attr('type','text').addClass('timeinput ampm').attr('maxlength',2).val(time[2]).appendTo($ampmwrap);
+                        $('<button/>').addClass('changeval up ampm').html(thisobj.settings.increaseText).attr('data-action','am').appendTo($ampmwrap);
+                        $('<button/>').addClass('changeval down ampm').html(thisobj.settings.decreaseText).attr('data-action','pm').appendTo($ampmwrap);
                     }
                     thisobj.popup.append($hourwrap,$mintwrap,$ampmwrap).appendTo(thisobj.popupwrapper);
                 },
@@ -126,14 +126,13 @@
                     var check = thisobj.timefunctions.changeNum(thisobj.mint,thisobj.mintulimit,thisobj.mintdlimit,mins * mult);
                     thisobj.mint = check[0];
                     if(check[1]){ //minutes have ticked over, so change the hour accordingly
-                        thisobj.timefunctions.changeHours(check[1]);
+                        thisobj.timefunctions.changeHours(check[1],1);
                     }
                 },
                 //change the current time by a given amount of hours
-                changeHours: function(mult,mins=1){
+                changeHours: function(mult,changeby){
                     var storehour = thisobj.hour;
-                    //var pass = thisobj.hour + (mins * mult);
-                    var check = thisobj.timefunctions.changeNum(thisobj.hour,thisobj.hourulimit,thisobj.hourdlimit,mins * mult); //now check if that's within the bounds
+                    var check = thisobj.timefunctions.changeNum(thisobj.hour,thisobj.hourulimit,thisobj.hourdlimit,changeby * mult); //now check if that's within the bounds
                     thisobj.hour = check[0];
                     //this is clunky but works
                     if(!thisobj.settings.twentyfourhour){
@@ -168,17 +167,21 @@
                 },
                 //update the values for time that are displayed
                 syncTime: function(){
-        			display_hour = thisobj.hour;
-        			display_mint = thisobj.mint;
+        			thisobj.display_hour = thisobj.hour;
+        			thisobj.display_mint = thisobj.mint;
         			//pad numbers with zeroes if needed
         			if(thisobj.settings.twentyfourhour){
-            			if(display_hour < 10) display_hour = '0' + thisobj.hour;
+            			if(thisobj.display_hour < 10){
+                            thisobj.display_hour = '0' + thisobj.hour;
+                        }
                     }
-        			if(display_mint < 10) display_mint = '0' + thisobj.mint;
+        			if(thisobj.display_mint < 10){
+                        thisobj.display_mint = '0' + thisobj.mint;
+                    }
                 },
                 //update all the popup's time boxes with the correct values for hour, minute, etc.
                 updateChildren: function(){
-                    var toshow = [display_hour,display_mint,thisobj.ampm];
+                    var toshow = [thisobj.display_hour,thisobj.display_mint,thisobj.ampm];
                     var i = 0;
                     if(thisobj.popup){
                         thisobj.popup.find('input').each(function(){
@@ -190,10 +193,10 @@
                 //update the parent's displayed val
                 updateParent: function(){
                     if(thisobj.settings.twentyfourhour){
-                        thisobj.$elem.val(display_hour + ':' + display_mint);
+                        thisobj.$elem.val(thisobj.display_hour + ':' + thisobj.display_mint);
                     }
                     else {
-                        thisobj.$elem.val(display_hour + ':' + display_mint + ' ' + thisobj.ampm);
+                        thisobj.$elem.val(thisobj.display_hour + ':' + thisobj.display_mint + ' ' + thisobj.ampm);
                     }
                 },
                 //switch between am and pm
@@ -212,10 +215,12 @@
                     var hour = time.split(':');
                     var mint = hour[1].split(' ');
                     var ampm = mint[1];
-                    if(thisobj.settings.twentyfourhour)
+                    if(thisobj.settings.twentyfourhour){
                         return([hour[0],mint[0]]);
-                    else
+                    }
+                    else {
                         return([hour[0],mint[0],ampm]);
+                    }
                 },
                 createListeners: function(){
                     //create popup
@@ -252,7 +257,7 @@
                         thisobj.timefunctions.updateAll();
                     });
                     //selects all text in element when focussed
-                    thisobj.popupwrapper.on('focus','.timeinput',function(e){
+                    thisobj.popupwrapper.on('focus','.timeinput',function(){
                         thisobj.timefunctions.updateAll();
                     });
 
@@ -261,15 +266,15 @@
                         var change = 0;
                         var code = e.keyCode || e.which;
 
-                        var ulimit = thisobj.hourulimit;
-                        var dlimit = thisobj.hourdlimit;
+                        //var ulimit = thisobj.hourulimit;
+                        //var dlimit = thisobj.hourdlimit;
                         var timeval = thisobj.hour;
                         var callme = thisobj.timefunctions.changeHours;
                         var increment = 1;
 
                         if($(this).hasClass('mint')){
-                            ulimit = thisobj.mintulimit;
-                            dlimit = thisobj.mintdlimit;
+                            //ulimit = thisobj.mintulimit;
+                            //dlimit = thisobj.mintdlimit;
                             timeval = thisobj.mint;
                             increment = thisobj.settings.incrementMins;
                             callme = thisobj.timefunctions.changeMinutes;

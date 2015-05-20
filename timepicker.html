@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" id="site" class="nojs">
+<head>
+    <title>Timepicker</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="timepicker.css"/>
+    <style>
+        label { display:block; }
+        .float { float: left; padding: 20px; }
+    </style>
+</head>
+
+<body>
+    <h1>Timepicker examples</h1>
+
+    <div class="float">
+        <div class="tp-wrapper">
+            <label for="one">12 hour</label>
+            <input type="text" id="one" class="timepicker"/>
+        </div>
+    </div>
+
+    <div class="float">
+        <div class="tp-wrapper">
+            <label for="two">24 hour</label>
+            <input type="text" id="two" class="timepicker2"/>
+        </div>
+    </div>
+
+    <!-- Grab Google-hosted jQuery. Fall back to locally saved file if necessary. -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="timepicker.jquery.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.timepicker').timepicker();
+            $('.timepicker2').timepicker({
+                'twentyfourhour':1,
+                'initialHour':23,
+                'initialMin': 30
+            });
+        });
+    </script>
+</body>
+</html>

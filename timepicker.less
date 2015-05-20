@@ -1,0 +1,91 @@
+
+/* mixins */
+	.box-shadow( @shadow ) {
+		-webkit-box-shadow: @shadow;
+		box-shadow        : @shadow;
+	}
+	.border-box {
+		-moz-box-sizing   : border-box;
+		-webkit-box-sizing: border-box;
+		-ms-box-sizing    : border-box;
+		box-sizing        : border-box;
+    }
+	.border-radius(@radius: 0.3em) {
+		-webkit-border-radius: @radius;
+		-moz-border-radius   : @radius;
+		border-radius        : @radius;
+	}
+	
+/* variables */
+    @grey: #dedede;
+    @greyLight: #f4f4f4;
+    @greyDark: #bfbfbf;
+    @black: #252525;
+
+/* actual css */
+    .tp-wrapper {
+        position:relative;
+        display:inline;
+    }
+    .tp {
+        position:absolute;
+        z-index:900;
+        top:100%;
+        left:0;
+        padding:10px;
+        margin-top:10px;
+        background:@greyLight;
+        border:solid 1px @greyDark;
+        .box-shadow( 0 3px 3px rgba(0,0,0,0.1) );
+        .border-radius( 5px );
+        .border-box();
+        
+        &:before,
+        &:after {
+            content:"";
+            position:absolute;
+            left:7px;
+            bottom:100%;
+            border-style:solid;
+            border-width:10px;
+        }
+        &:before {
+            border-color:transparent transparent @greyDark transparent;
+        }
+        &:after {
+            margin-bottom:-1px;
+            border-color:transparent transparent @greyLight transparent;
+        }
+
+        .timewrap {
+            float:left;
+            padding:0 5px;
+            width:100% / 3;
+            .border-box();
+            text-align:center;
+        }
+
+        input[type="text"]{
+            display:block;
+            width:100%;
+            margin:0 0 4px 0;
+            .border-box();
+            .border-radius( 3px );
+            border:solid 1px @greyDark;
+            text-align:center;
+        }
+
+        .changeval {
+            border:0;
+            width:100%;
+            margin:0 0 4px 0;
+            background:@grey;
+            color:@black;
+            .border-radius( 3px );
+            cursor:pointer;
+            font-size:100%;
+            &:hover {
+                background:@greyDark;
+            }
+        }
+    }

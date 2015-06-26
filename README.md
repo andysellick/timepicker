@@ -1,11 +1,13 @@
 Timepicker
 ==========
 
-A plugin to allow easy selection of times within a text field. 
+A plugin to allow easy selection of times within a text field.
 
 Acts on a chosen text input field that when clicked produces a popup with buttons to change the values of hour, minute and am/pm. Numbers can also be typed into the boxes in the popup, or if focussed, the cursor up and down keys will increment or decrement the value.
 
 Times automatically roll around, so increasing the time by one minute from 11:59 AM will take the time to 12:00 PM.
+
+Designed to be lightweight and have no external dependencies other than its own (quite simple) stylesheet.
 
 Usage
 -----
@@ -39,5 +41,4 @@ TODO
 ----
 
 - Probably needs a bit more testing.
-- AM/PM box doesn't allow text changes yet.
 - Doesn't yet allow for direct input in the original box.

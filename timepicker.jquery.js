@@ -286,19 +286,28 @@
                             thisobj.timefunctions.updateAll();
                         }
                         else {
-                            var ent = parseInt($(this).val());
-                            if(!isNaN(ent)){ //if a number has been entered
-                                if(ent > timeval){
+                            var ent = $(this).val();
+                            var entnum = parseInt(ent);
+                            if(!isNaN(entnum)){ //if a number has been entered
+                                if(entnum > timeval){
                                     change = 1;
-                                    increment = ent - timeval;
+                                    increment = entnum - timeval;
                                 }
-                                else if(timeval > ent){
+                                else if(timeval > entnum){
                                     change = -1;
-                                    increment = timeval - ent;
+                                    increment = timeval - entnum;
                                 }
                                 callme(increment,change);
                     			thisobj.timefunctions.syncTime();
                                 thisobj.timefunctions.updateParent();
+                            }
+                            else if($(this).hasClass('ampm')){
+                                ent = ent.toUpperCase();
+                                if(ent == "AM" || ent == "PM"){
+                                    thisobj.ampm = ent;
+                                    thisobj.timefunctions.syncTime();
+                                    thisobj.timefunctions.updateParent();
+                                }
                             }
                         }
                     });

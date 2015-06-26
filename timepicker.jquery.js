@@ -144,7 +144,6 @@
                         }
                     }
                 },
-
                 //change a number by the amount supplied, adjust for limits and notify if an adjustment was made
                 changeNum: function(num,rangemax,rangemin,changeby){
                     num = num + changeby;
@@ -266,18 +265,17 @@
                         var change = 0;
                         var code = e.keyCode || e.which;
 
-                        //var ulimit = thisobj.hourulimit;
-                        //var dlimit = thisobj.hourdlimit;
                         var timeval = thisobj.hour;
                         var callme = thisobj.timefunctions.changeHours;
                         var increment = 1;
 
                         if($(this).hasClass('mint')){
-                            //ulimit = thisobj.mintulimit;
-                            //dlimit = thisobj.mintdlimit;
                             timeval = thisobj.mint;
                             increment = thisobj.settings.incrementMins;
                             callme = thisobj.timefunctions.changeMinutes;
+                        }
+                        else if($(this).hasClass('ampm')){
+                            callme = thisobj.timefunctions.switchAMPM;
                         }
                         if(code == 38){ //up
                             callme(1,increment);
@@ -309,10 +307,10 @@
 
 			thisobj.timefunctions.setupVariables();
             thisobj.timefunctions.createListeners();
-            
+
             //console.log(this.hourulimit,this.hourdlimit,this.mintulimit,this.mintdlimit);
 
-            //fixme up/down keyboard?
+            //fixme up/down keyboard in the original element - maybe a future feature
             $('.timeinput').on('click',function(e){});
 		}
 	}

@@ -11,16 +11,19 @@ Designed to be lightweight and have no external dependencies other than its own 
 
 Usage
 -----
-
-$('.timepicker').timepicker();
-
+```html
+    $(document).ready(function(){
+        $('.timepicker').timepicker();
+    });
+```
 
 Markup
 ------
-
-&lt;div class="tp-wrapper"&gt;
-    &lt;input type="text" class="timepicker"/&gt;
-&lt;/div&gt;
+```html
+<div class="tp-wrapper">
+    <input type="text" class="timepicker"/>
+</div>
+```
 
 Note that the input is the element the plugin is called on, and the wrapper element is still required.
 

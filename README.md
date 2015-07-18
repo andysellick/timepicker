@@ -12,9 +12,9 @@ Designed to be lightweight and have no external dependencies other than its own 
 Usage
 -----
 ```html
-    $(document).ready(function(){
-        $('.timepicker').timepicker();
-    });
+$(document).ready(function(){
+    $('.timepicker').timepicker();
+});
 ```
 
 Markup
@@ -31,13 +31,13 @@ Note that the input is the element the plugin is called on, and the wrapper elem
 Options
 -------
 
-- twentyfourhour: 0 or 1. Defaults to 0, which sets the time to a 12 hour clock.
-- initialHour: the initial hour shown in the input.
-- initialMin: the initial minute shown in the input.
-- initialAMPM: 'AM' or 'PM'. The initial value for am or pm. Ignored if twentyfourhour is 1.
-- incrementMins: number. When the change value buttons for minutes are clicked, change the minutes by this number. Defaults to 5 (hours always change by 1).
-- increaseText: text string for the increment button text. Defaults to "+"
-- decreaseText: text string for the decrement button text. Defaults to "-"
+- **twentyfourhour**: 0 or 1. Defaults to 0, which sets the time to a 12 hour clock.
+- **initialHour**: the initial hour shown in the input.
+- **initialMin**: the initial minute shown in the input.
+- **initialAMPM**: 'AM' or 'PM'. The initial value for am or pm. Ignored if twentyfourhour is 1.
+- **incrementMins**: number. When the change value buttons for minutes are clicked, change the minutes by this number. Defaults to 5 (hours always change by 1).
+- **increaseText**: text string for the increment button text. Defaults to "+"
+- **decreaseText**: text string for the decrement button text. Defaults to "-"
 
 
 TODO
